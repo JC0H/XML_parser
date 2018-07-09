@@ -46,5 +46,23 @@ task parseXml(){
 }
 
 
+task hello << {
+
+    project.projects.project.each {
+        ant.echo(message: it.@name)
+    }
+
+    project.projects.project.artefacts.artefact.each {
+        ant.echo(message: it.@name)
+    }
+
+    project.projects.project.artefacts.artefact.deploymentDestination.each {
+        ant.echo(message: it)
+    }
+    
+
+}
+
+
 
 
