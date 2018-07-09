@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects directory="/home/adndrii/CRMProjects" defaultDeploymentDirectory="/home/adndrii/WildFly/standalone/deployments">
+
+    <project name="CRM" defaultProfile="All">
+        <artefacts>
+            <artefact name ="artefact_1_1.ear">
+                <!-- Jak jest DEFAULT to odczytac z parametru defaultDeploymentDirectory -->
+                <!-- Brak artifactDeploymentName lub  artifactDeploymentName="" oznacza, ze nie nalezy zmieniac nazwy artefactu-->
+                <deploymentDestination>DEFAULT</deploymentDestination>
+            </artefact>
+            <artefact name ="artefact_1_2-war.ear">
+                <!-- artifactDeploymentName - nalezy zmienic nazwe kopiowanego pliku -->
+                <deploymentDestination artifactDeploymentName="artefact_1_2.jar">/home/adndrii/WildFly/standalone/deployments</deploymentDestination>
+                <deploymentDestination artifactDeploymentName="artefact_1_2.war">/home/adndrii/WildFly/standalone/deployments</deploymentDestination>
+                <deploymentDestination artifactDeploymentName="artefact_1_2.ear">/home/adndrii/WildFly/standalone/deployments</deploymentDestination>
+            </artefact>
+            <artefact name ="artefact_1_3.ear">
+                <deploymentDestination artifactDeploymentName="groupId7">/home/adndrii/WildFly/standalone/deployments</deploymentDestination>
+                <deploymentDestination artifactDeploymentName="groupId8">/home/adndrii/WildFly/standalone/toDeploy</deploymentDestination>
+            </artefact>
+        </artefacts>
+    </project>
+
+    <project name="CRM-Windykacja" defaultProfile="All">
+        <artefacts>
+            <artefact name ="artefact_2_1.ear">
+                <deploymentDestination>DEFAULT</deploymentDestination>
+            </artefact>
+            <artefact name ="artefact_2_2.war">
+                <deploymentDestination>DEFAULT</deploymentDestination>
+                <deploymentDestination>/home/adndrii/WildFly/standalone/toDeploy</deploymentDestination>
+            </artefact>
+            <artefact name ="artefact_2_3.ear">
+            </artefact>
+        </artefacts>
+    </project>
+
+    <project name="CRM-Ankiety" defaultProfile="dev">
+        <artefacts>
+            <artefact name ="artefact_3_1.ear">
+                <deploymentDestination artifactDeploymentName="">DEFAULT</deploymentDestination>
+                <deploymentDestination artifactDeploymentName="">/home/adndrii/WildFly/standalone/toDeploy</deploymentDestination>
+            </artefact>
+            <artefact name ="artefact_3_2.ear">
+                <deploymentDestination artifactDeploymentName="">DEFAULT</deploymentDestination>
+            </artefact>
+            <artefact name ="artefact_3_3.ear">
+                <deploymentDestination artifactDeploymentName="">/home/adndrii/WildFly/standalone/toDeploy</deploymentDestination>
+            </artefact>
+        </artefacts>
+    </project>
+</projects>
