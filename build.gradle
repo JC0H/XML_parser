@@ -1,12 +1,5 @@
-buildscript {
-    repositories {
-        maven {
-            url "http://repo.mycompany.com/maven2"
-        }
-    }
-}
-
 apply plugin: 'java'
+apply plugin: 'idea'
 
 group 'com.plus'
 version '1.0-SNAPSHOT'
@@ -17,52 +10,51 @@ project.ext {
     projects = (new XmlSlurper()).parse('properties.xml')
 }
 
+
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.11'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.slf4j:slf4j-log4j12:1.7.18'
+
+    /*testCompile group: 'junit', name: 'junit', version: '4.12'*/
+}
+
+repositories {
+    mavenCentral()
 }
 
 task parseXml(){
 
     project.projects.project.each {
-        println "PROJECT.name : " + it.@name
+        logger.quiet  "PROJECT.name : " + it.@name
         it.artefacts.artefact.each {
             def artifactNmane = it.@name
-            println "  ARTEFACT.name : " + artifactNmane
+            logger.quiet  "  ARTEFACT.name : " + artifactNmane
             it.deploymentDestination.each {
                 if (it.text().equals("DEFAULT") && it.@artifactDeploymentName.equals("")) {
-                    println "    DEPLOYMENTDESTINATION: " + projects.@defaultDeploymentDirectory +
-                            "    change artefact name: " + artifactNmane + " DEPLOYMENTDESTINATION " + it
+                    logger.quiet  "    DEPLOYMENTDESTINATION: " + projects.@defaultDeploymentDirectory
+
                 }else if (it.text().equals("DEFAULT")) {
-                    println "    DEPLOYMENTDESTINATION: " + projects.@defaultDeploymentDirectory
-                }else if (it.@artifactDeploymentName.equals("") || !it.@artifactDeploymentName.equals("")) {
-                    println "    change artefact name: " + artifactNmane + " DEPLOYMENTDESTINATION " + it
+                    logger.quiet  "    DEPLOYMENTDESTINATION: " + projects.@defaultDeploymentDirectory
+                }else if (!it.@artifactDeploymentName.equals("")) {
+                    logger.quiet  "    change artifactDeploymentName: " + artifactNmane + " DEPLOYMENTDESTINATION " + it
                 }else {
-                    println "    DEPLOYMENTDESTINATION: " + it
+                    logger.quiet  "    DEPLOYMENTDESTINATION: " + it
                 }
             }
         }
     }
 }
 
-
-task hello << {
-
-    project.projects.project.each {
-        ant.echo(message: it.@name)
-    }
-
-    project.projects.project.artefacts.artefact.each {
-        ant.echo(message: it.@name)
-    }
-
-    project.projects.project.artefacts.artefact.deploymentDestination.each {
-        ant.echo(message: it)
-    }
-    
-
+task deploymentName(type: Exec) {
+    commandLine 'echo', project.projects.project.artefacts.artefact.deploymentDestination
 }
 
+task artefactName(type: Exec) {
+    commandLine 'echo', project.projects.project.artefacts.artefact.@name
+}
 
-
-
+task projectName(type: Exec) {
+    commandLine 'echo', project.projects.project.@name
+}
